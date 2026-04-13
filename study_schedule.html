@@ -1216,7 +1216,7 @@ function buildCard(item) {
     const isTryIT = info.type === 'tryit';
     const searchKey = encodeURIComponent(s.topic);
     const videoUrl  = isTryIT
-      ? 'https://www.try-it.jp/c1/english/'
+      ? YOUTUBE_TRYIT + searchKey
       : YOUTUBE_HAICHI + searchKey;
 
     const btnClass = isTryIT ? 'btn-tryit' : 'btn-haichi';
