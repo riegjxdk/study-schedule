@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>📚 前期中間テスト 勉強スケジュール</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap');
+
+  :root {
+    --math:    #e53935;
+    --math-bg: #fff5f5;
+    --eng:     #2e7d32;
+    --eng-bg:  #f1f8f2;
+    --sci:     #6a1b9a;
+    --sci-bg:  #f8f0ff;
+    --soc:     #e65100;
+    --soc-bg:  #fff8f0;
+    --jpn:     #00695c;
+    --jpn-bg:  #f0faf8;
+    --rest:    #9e9e9e;
+    --rest-bg: #f5f5f5;
+    --phase1:  #1565c0;
+    --phase2:  #558b2f;
+    --phase3:  #c62828;
+    --gold:    #f9a825;
+    --bg:      #f7f8fc;
+    --card:    #ffffff;
+    --shadow:  0 2px 12px rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    padding-bottom: 40px;
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #1565c0 100%);
+    color: white;
+    padding: 24px 16px 20px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(21,101,192,0.4);
+  }
+  .header-title {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .header-sub {
+    font-size: 13px;
+    opacity: 0.85;
+    margin-bottom: 12px;
+  }
+  .countdown-wrap {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .countdown-num {
+    font-size: 28px;
+    font-weight: 900;
+    color: #ffeb3b;
+    display: block;
+    line-height: 1;
+  }
+
+  /* ===== SCORE BOARD ===== */
+  .score-section {
+    margin: 12px 16px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .score-header {
+    background: linear-gradient(135deg, #ff6f00, #ffa000);
+    color: white;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .score-body { padding: 12px 16px; }
+  .score-today {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .score-input-wrap {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex: 1;
+  }
+  .score-input {
+    width: 70px;
+    padding: 8px;
+    border: 2px solid #ffa000;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 800;
+    text-align: center;
+    font-family: inherit;
+    color: #ff6f00;
+  }
+  .score-save-btn {
+    padding: 8px 16px;
+    background: #ff6f00;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .score-save-btn:active { opacity: 0.8; }
+  .score-history {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+  .score-day {
+    text-align: center;
+    padding: 4px 2px;
+    border-radius: 6px;
+    background: #f5f5f5;
+  }
+  .score-day .sd { font-size: 9px; color: #999; }
+  .score-day .sv { font-size: 14px; font-weight: 800; color: #333; }
+  .score-day.best { background: #fff3e0; }
+  .score-day.best .sv { color: #ff6f00; }
+  .score-best-wrap {
+    text-align: center;
+    padding: 8px;
+    background: #fff3e0;
+    border-radius: 10px;
+    font-size: 12px;
+    color: #ff6f00;
+    font-weight: 700;
+  }
+  .score-best-wrap strong { font-size: 22px; }
+
+  /* ===== MISS MEMO ===== */
+  .miss-section {
+    margin: 0 16px 12px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .miss-header {
+    background: linear-gradient(135deg, #1565c0, #1976d2);
+    color: white;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .miss-toggle { font-size: 11px; cursor: pointer; opacity: 0.85; }
+  .miss-body { padding: 12px 16px; }
+  .miss-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+    align-items: flex-start;
+  }
+  .miss-subj-select {
+    padding: 6px 8px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-size: 12px;
+    font-family: inherit;
+    width: 70px;
+    flex-shrink: 0;
+  }
+  .miss-text {
+    flex: 1;
+    padding: 6px 8px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-size: 12px;
+    font-family: inherit;
+    resize: none;
+    height: 36px;
+  }
+  .miss-del { background: none; border: none; font-size: 16px; cursor: pointer; padding: 4px; color: #ccc; }
+  .miss-add-btn {
+    width: 100%;
+    padding: 8px;
+    background: #e3f2fd;
+    border: 1.5px dashed #1565c0;
+    border-radius: 8px;
+    color: #1565c0;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    margin-bottom: 8px;
+  }
+  .miss-claude-btn {
+    width: 100%;
+    padding: 10px;
+    background: #1565c0;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .miss-claude-btn:active { opacity: 0.85; }
+
+  /* ===== CLAUDE QUIZ BUTTON in card ===== */
+  .btn-sutapen { background: #f57f17; color: white; }
+  .btn-test    { background: #00838f; color: white; }
+  .btn-claude {
+    background: linear-gradient(135deg, #6a1b9a, #8e24aa);
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 7px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    transition: opacity 0.15s;
+  }
+  .btn-claude:active { opacity: 0.8; }
+
+  /* prompt popup */
+  .prompt-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .prompt-overlay.open { display: flex; }
+  .prompt-box {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  .prompt-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #6a1b9a;
+    margin-bottom: 8px;
+  }
+  .prompt-text {
+    font-size: 12px;
+    color: #333;
+    background: #f8f0ff;
+    border-radius: 8px;
+    padding: 12px;
+    line-height: 1.7;
+    margin-bottom: 12px;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  .prompt-copy-btn {
+    width: 100%;
+    padding: 12px;
+    background: #6a1b9a;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    margin-bottom: 8px;
+  }
+  .prompt-close-btn {
+    width: 100%;
+    padding: 10px;
+    background: #f5f5f5;
+    color: #555;
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .copied-msg {
+    text-align: center;
+    font-size: 12px;
+    color: #2e7d32;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: none;
+  }
+
+  /* ===== TABS ===== */
+  .tabs {
+    display: flex;
+    overflow-x: auto;
+    background: #283593;
+    padding: 0 8px;
+    gap: 4px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    flex-shrink: 0;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.65);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    font-family: inherit;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+  .tab.active {
+    color: #fff;
+    border-bottom-color: #ffeb3b;
+  }
+
+  /* ===== PHASE HEADER ===== */
+  .phase-header {
+    margin: 16px 16px 8px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .phase1-header { background: #e3f2fd; color: var(--phase1); }
+  .phase2-header { background: #f1f8e9; color: var(--phase2); }
+  .phase3-header { background: #ffebee; color: var(--phase3); }
+  .phase-wait-header { background: #fffde7; color: #f57f17; }
+
+  /* ===== CARDS ===== */
+  .cards-wrap {
+    padding: 0 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .day-card {
+    background: var(--card);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border-left: 5px solid #ccc;
+    transition: transform 0.15s;
+  }
+  .day-card:active { transform: scale(0.99); }
+
+  .day-card.math   { border-left-color: var(--math); }
+  .day-card.eng    { border-left-color: var(--eng); }
+  .day-card.sci    { border-left-color: var(--sci); }
+  .day-card.soc    { border-left-color: var(--soc); }
+  .day-card.jpn    { border-left-color: var(--jpn); }
+  .day-card.rest   {
+    border-left-color: var(--rest);
+    border-style: dashed;
+    background: var(--rest-bg);
+    border-width: 2px;
+    opacity: 0.7;
+  }
+  .day-card.wait   {
+    border-left-color: var(--gold);
+    background: #fffde7;
+  }
+  .day-card.review { border-left-color: #c62828; }
+
+  .card-header {
+    padding: 12px 14px 8px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .card-date {
+    font-size: 16px;
+    font-weight: 800;
+    color: #1a1a2e;
+  }
+  .card-date span {
+    font-size: 12px;
+    font-weight: 500;
+    color: #777;
+    margin-left: 4px;
+  }
+  .badges { display: flex; gap: 6px; flex-wrap: wrap; }
+  .badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    color: white;
+  }
+  .badge.math { background: var(--math); }
+  .badge.eng  { background: var(--eng); }
+  .badge.sci  { background: var(--sci); }
+  .badge.soc  { background: var(--soc); }
+  .badge.jpn  { background: var(--jpn); }
+
+  .card-body { padding: 0 14px 14px; }
+
+  /* Subjects within a card */
+  .subject-block {
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
+  .subject-block.math { background: var(--math-bg); }
+  .subject-block.eng  { background: var(--eng-bg); }
+  .subject-block.sci  { background: var(--sci-bg); }
+  .subject-block.soc  { background: var(--soc-bg); }
+  .subject-block.jpn  { background: var(--jpn-bg); }
+
+  .subject-title {
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+  .subject-title.math { color: var(--math); }
+  .subject-title.eng  { color: var(--eng); }
+  .subject-title.sci  { color: var(--sci); }
+  .subject-title.soc  { color: var(--soc); }
+  .subject-title.jpn  { color: var(--jpn); }
+
+  .topic-text {
+    font-size: 13px;
+    color: #333;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  /* Buttons */
+  .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: opacity 0.15s, transform 0.1s;
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+  }
+  .btn:active { opacity: 0.8; transform: scale(0.97); }
+  .btn-haichi { background: #e53935; color: white; }
+  .btn-tryit  { background: #e91e8c; color: white; }
+  .btn-ex     { background: #1565c0; color: white; }
+
+  /* Info rows */
+  .info-row {
+    font-size: 12px;
+    color: #555;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .info-label {
+    font-weight: 700;
+    color: #777;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Habitica */
+  .habitica-hint {
+    margin-top: 10px;
+    padding: 8px 10px;
+    background: #e8f5e9;
+    border-radius: 8px;
+    font-size: 11px;
+    color: #2e7d32;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Duration badge */
+  .duration-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    background: #e3f2fd;
+    color: var(--phase1);
+    margin-bottom: 8px;
+  }
+
+  /* Rest card */
+  .rest-text {
+    padding: 16px;
+    text-align: center;
+    color: var(--rest);
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  /* Weekend intensive card (テスト2週間前の土日) */
+  .day-card.weekend-intensive {
+    border-left-color: #6a1b9a;
+    background: #fff;
+    border-left-width: 6px;
+  }
+  .weekend-header {
+    padding: 12px 14px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .weekend-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 11px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #6a1b9a, #c62828);
+    color: white;
+  }
+  .weekend-body { padding: 0 14px 14px; }
+  .weekend-block {
+    margin-bottom: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
+  .weekend-block.math { background: var(--math-bg); }
+  .weekend-block.eng  { background: var(--eng-bg); }
+  .weekend-block.sci  { background: var(--sci-bg); }
+  .weekend-block.soc  { background: var(--soc-bg); }
+  .weekend-block.jpn  { background: var(--jpn-bg); }
+  .weekend-block-title { font-size: 13px; font-weight: 800; margin-bottom: 4px; }
+  .weekend-block-title.math { color: var(--math); }
+  .weekend-block-title.eng  { color: var(--eng); }
+  .weekend-block-title.sci  { color: var(--sci); }
+  .weekend-block-title.soc  { color: var(--soc); }
+  .weekend-block-title.jpn  { color: var(--jpn); }
+  .weekend-task { font-size: 12px; color: #444; line-height: 1.7; }
+
+  /* Light review card (weekend / GW) */
+  .day-card.light {
+    border-left-color: #78909c;
+    background: #f8fafc;
+  }
+  .light-header {
+    padding: 10px 14px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .light-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: #90a4ae;
+    color: white;
+  }
+  .light-body {
+    padding: 0 14px 12px;
+  }
+  .light-task {
+    font-size: 13px;
+    font-weight: 600;
+    color: #455a64;
+    padding: 8px 10px;
+    background: #eceff1;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.5;
+  }
+  .light-note {
+    font-size: 11px;
+    color: #90a4ae;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* Wait card */
+  .wait-text {
+    padding: 12px 14px;
+    color: #f57f17;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Review card */
+  .review-text {
+    padding: 12px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #c62828;
+  }
+
+  /* Section label */
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #aaa;
+    padding: 8px 12px 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* Hidden panels */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* Phase pills */
+  .phase-pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .pill-p1 { background: #e3f2fd; color: var(--phase1); }
+  .pill-p2 { background: #f1f8e9; color: var(--phase2); }
+  .pill-p3 { background: #ffebee; color: var(--phase3); }
+
+  /* Test day */
+  .test-day-card {
+    margin: 12px;
+    padding: 20px;
+    background: linear-gradient(135deg, #c62828, #b71c1c);
+    border-radius: 16px;
+    color: white;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(198,40,40,0.4);
+  }
+  .test-day-card .big { font-size: 28px; font-weight: 900; }
+  .test-day-card .sub { font-size: 14px; opacity: 0.85; margin-top: 4px; }
+
+  /* Legend */
+  .legend {
+    margin: 16px;
+    padding: 14px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+  }
+  .legend-title { font-size: 12px; font-weight: 800; color: #555; margin-bottom: 10px; }
+  .legend-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: #333; }
+  .legend-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-title">📚 前期中間テスト 勉強スケジュール</div>
+  <div class="header-sub">6月3日（火）まで — 毎日コツコツ積み上げよう！</div>
+  <div class="countdown-wrap">
+    テストまで
+    <span class="countdown-num" id="countdown">--</span>
+    日
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('all',this)">📅 全体</button>
+  <button class="tab" onclick="switchTab('p1',this)">Phase 1</button>
+  <button class="tab" onclick="switchTab('p2',this)">Phase 2</button>
+  <button class="tab" onclick="switchTab('p3',this)">Phase 3</button>
+</div>
+
+<!-- PROMPT POPUP OVERLAY -->
+<div class="prompt-overlay" id="promptOverlay">
+  <div class="prompt-box">
+    <div class="prompt-title">🤖 Claudeにコピペしてテストしてもらおう！</div>
+    <div class="prompt-text" id="promptText"></div>
+    <div class="copied-msg" id="copiedMsg">✅ コピーしました！</div>
+    <button class="prompt-copy-btn" onclick="copyPrompt()">📋 プロンプトをコピー</button>
+    <button class="prompt-close-btn" onclick="closePrompt()">閉じる</button>
+  </div>
+</div>
+
+<!-- SCORE BOARD -->
+<div class="score-section">
+  <div class="score-header">
+    🏆 Claudeテスト スコアボード
+    <span style="font-size:11px;opacity:.85;">今日のスコアを記録しよう</span>
+  </div>
+  <div class="score-body">
+    <div class="score-today">
+      <div style="font-size:12px;font-weight:700;color:#555;flex-shrink:0;">今日のスコア</div>
+      <div class="score-input-wrap">
+        <input type="number" class="score-input" id="scoreInput" min="0" max="5" placeholder="0〜5">
+        <span style="font-size:13px;color:#888;">/ 5問</span>
+        <button class="score-save-btn" onclick="saveScore()">記録！</button>
+      </div>
+    </div>
+    <div class="score-history" id="scoreHistory"></div>
+    <div class="score-best-wrap" id="scoreBest">ベストスコア：まだなし</div>
+  </div>
+</div>
+
+<!-- MISS MEMO -->
+<div class="miss-section">
+  <div class="miss-header">
+    ❌ 間違いメモ
+    <span class="miss-toggle" onclick="toggleMiss()">▼ 開く</span>
+  </div>
+  <div class="miss-body" id="missBody" style="display:none;">
+    <div id="missRows"></div>
+    <button class="miss-add-btn" onclick="addMissRow()">＋ 間違いを追加</button>
+    <button class="miss-claude-btn" onclick="generateMissPrompt()">🤖 Claude分析プロンプトを生成</button>
+  </div>
+</div>
+
+
+<div id="tab-all" class="tab-panel active">
+
+  <!-- PHASE 1 -->
+  <div class="phase-header phase1-header">
+    🌱 Phase 1（4/9〜4/30）
+    <span class="phase-pill pill-p1">30分×2教科</span>
+  </div>
+  <div class="cards-wrap" id="phase1-cards"></div>
+
+  <!-- PHASE 2 -->
+  <div class="phase-header phase2-header">
+    🔥 Phase 2（5/7〜5/21）
+    <span class="phase-pill pill-p2">1時間×2教科</span>
+  </div>
+  <div class="cards-wrap" id="phase2-cards"></div>
+
+  <!-- PHASE 3 -->
+  <div class="phase-header phase3-header">
+    ⚡ Phase 3（5/22〜6/2）
+    <span class="phase-pill pill-p3">1.5時間×2教科</span>
+  </div>
+  <div class="cards-wrap" id="phase3-cards"></div>
+
+  <!-- TEST DAY -->
+  <div class="test-day-card">
+    <div class="big">🎯 6月3日（火）</div>
+    <div class="sub">前期中間テスト本番！</div>
+    <div style="margin-top:10px;font-size:13px;font-weight:700;">全力でがんばれ！💪</div>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <div class="legend-title">📌 教科の色</div>
+    <div class="legend-grid">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--math)"></div>数学</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--eng)"></div>英語</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--sci)"></div>理科</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--soc)"></div>社会</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--jpn)"></div>国語</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#90a4ae"></div>軽め復習</div>
+      <div class="legend-item" style="grid-column:1/-1"><div class="legend-dot" style="background:linear-gradient(135deg,#6a1b9a,#c62828)"></div>💪 テスト直前 集中日（土日）</div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE TABS -->
+<div id="tab-p1" class="tab-panel">
+  <div class="phase-header phase1-header">🌱 Phase 1（4/9〜4/30）<span class="phase-pill pill-p1">30分×2教科</span></div>
+  <div class="cards-wrap" id="phase1-cards-b"></div>
+</div>
+<div id="tab-p2" class="tab-panel">
+  <div class="phase-header phase2-header">🔥 Phase 2（5/7〜5/21）<span class="phase-pill pill-p2">1時間×2教科</span></div>
+  <div class="cards-wrap" id="phase2-cards-b"></div>
+</div>
+<div id="tab-p3" class="tab-panel">
+  <div class="phase-header phase3-header">⚡ Phase 3（5/22〜6/2）<span class="phase-pill pill-p3">1.5時間×2教科</span></div>
+  <div class="cards-wrap" id="phase3-cards-b"></div>
+</div>
+
+<script>
+// ===== DATA =====
+const YOUTUBE_HAICHI = 'https://www.youtube.com/results?search_query=とある男が授業をしてみた+中1+';
+const YOUTUBE_TRYIT  = 'https://www.youtube.com/results?search_query=TryIT+トライイット+中1+';
+const YOUTUBE_EX_H   = 'https://www.youtube.com/results?search_query=とある男が授業をしてみた+中1+練習問題+';
+const YOUTUBE_EX_T   = 'https://www.youtube.com/results?search_query=TryIT+トライイット+中1+練習問題+';
+
+const DURATION = { 1:'30min', 2:'60min', 3:'90min' };
+const WEEKDAY = ['日','月','火','水','木','金','土'];
+
+// Subject metadata
+const SUBJ = {
+  math: { label:'数学', cls:'math', type:'haichi', page:'p.xx', todo:'教科書を読む → ノートまとめ → 練習問題' },
+  eng:  { label:'英語', cls:'eng',  type:'tryit',  page:'p.xx', todo:'音読3回 → 単語カード → 練習問題' },
+  sci:  { label:'理科', cls:'sci',  type:'haichi', page:'p.xx', todo:'図を書いてまとめ → 用語暗記 → 問題集' },
+  soc:  { label:'社会', cls:'soc',  type:'haichi', page:'p.xx', todo:'地図を見る → 要点まとめ → 問題集' },
+  jpn:  { label:'国語', cls:'jpn',  type:'haichi', page:'p.xx', todo:'音読 → 漢字練習 → プリント' },
+};
+
+const PAGE_INFO = {
+  '数学:正の数負の数①②':    'p.10〜17',
+  '理科:身近な生物の観察':   'p.6〜13',
+  '英語:アルファベット発音':  'p.4〜9',
+  '社会:世界の姿地図':       'p.8〜15',
+  '数学:絶対値':              'p.18〜21',
+  '国語:言葉の単位漢字':     'p.14〜19',
+  '英語:PROGRAM1 be動詞':    'p.10〜17',
+  '理科:種子をつくる植物':   'p.14〜23',
+  '数学:たし算ひき算':        'p.22〜27',
+  '社会:世界の6つの州':      'p.16〜21',
+  '英語:PROGRAM1 疑問文否定文': 'p.18〜25',
+  '国語:漢字音訓':            'p.20〜25',
+  '数学:かけ算わり算指数':    'p.28〜35',
+  '理科:種子をつくらない植物': 'p.24〜31',
+  '数学:1章まとめ':           'p.36〜39',
+  '英語:PROGRAM2 一般動詞':   'p.26〜33',
+  '社会:緯度経度時差':        'p.22〜29',
+  '国語:シンシュン読解':      'p.26〜39',
+  '数学:文字式ルール':        'p.42〜47',
+  '理科:脊椎動物':            'p.32〜41',
+  '英語:PROGRAM2 疑問文':     'p.34〜41',
+  '社会:日本の位置領土':      'p.30〜37',
+  '数学:式の値文字式計算':    'p.48〜53',
+  '国語:野原はうたう詩':      'p.40〜47',
+  '英語:PROGRAM3 can':        'p.42〜49',
+  '理科:無脊椎動物':          'p.42〜51',
+  '数学:文字式の利用2章まとめ': 'p.54〜59',
+  '社会:地理まとめ':          'p.38〜43',
+  '数学:1章全部解き直し':     '1章全体',
+  '英語:PROGRAM1〜3音読単語テスト': 'PROG.1〜3全体',
+  '理科:生物の世界まとめ':    '1章全体',
+  '社会:地理前半まとめ':      '前半全体',
+  '数学:❌問題繰り返し':      '1・2章',
+  '英語:音読単語テスト':      'PROG.1〜3',
+  '理科:用語暗記':            '1章',
+  '社会:問題集3ページ':       '問題集',
+  '国語:漢字まとめノート見直し': 'まとめノート',
+};
+
+const TODO_INFO = {
+  '数学:正の数負の数①②':    '教科書を読む → 例題解く → ノートまとめ',
+  '理科:身近な生物の観察':   '図を写す → 観察方法を暗記 → プリント確認',
+  '英語:アルファベット発音':  '音読10回 → アルファベット書き取り練習',
+  '社会:世界の姿地図':       '地図帳を見ながらまとめ → 大陸・海洋を暗記',
+  '数学:絶対値':              '数直線で確認 → 練習問題を全問解く',
+  '国語:言葉の単位漢字':     '漢字10問練習 → 言葉の単位ノートまとめ',
+  '英語:PROGRAM1 be動詞':    '音読3回 → be動詞の使い方ノートまとめ',
+  '理科:種子をつくる植物':   '図を描いてまとめ → 花のつくりを暗記',
+  '数学:たし算ひき算':        '符号に注意しながら例題 → 練習問題を解く',
+  '社会:世界の6つの州':      '地図で6つの州を確認 → 特徴をまとめる',
+  '英語:PROGRAM1 疑問文否定文': '疑問文・否定文の作り方を確認 → 作文練習',
+  '国語:漢字音訓':            '漢字20問練習 → 音読み・訓読みを区別して覚える',
+  '数学:かけ算わり算指数':    '指数の計算ルールを確認 → 練習問題',
+  '理科:種子をつくらない植物': 'コケ・シダの特徴を図でまとめ → 用語暗記',
+  '数学:1章まとめ':           '例題を見直し → まとめ問題を全問解く',
+  '英語:PROGRAM2 一般動詞':   '動詞リストを音読 → 例文を書いて覚える',
+  '社会:緯度経度時差':        '経度15°=1時間を覚える → 時差計算練習',
+  '国語:シンシュン読解':      '全文音読 → 登場人物の気持ちをまとめ',
+  '数学:文字式ルール':        '文字式のルールを確認 → 例題 → 練習問題',
+  '理科:脊椎動物':            '5グループの特徴を表でまとめ → 暗記',
+  '英語:PROGRAM2 疑問文':     '疑問文の作り方 → 答え方の練習',
+  '社会:日本の位置領土':      '日本の位置・領土問題を確認 → まとめ',
+  '数学:式の値文字式計算':    '式の値を代入して計算 → 文字式の計算練習',
+  '国語:野原はうたう詩':      '音読 → 詩のテーマと表現技法をまとめ',
+  '英語:PROGRAM3 can':        'canの使い方を確認 → 音読 → 例文作成',
+  '理科:無脊椎動物':          '昆虫・甲殻類などの特徴をまとめ → 暗記',
+  '数学:文字式の利用2章まとめ': '文字式の応用問題 → まとめ問題を解く',
+  '社会:地理まとめ':          '地理全体の要点を確認 → 問題集で腕試し',
+  '数学:1章全部解き直し':     '1章の問題を最初から → ❌問題に印をつける',
+  '英語:PROGRAM1〜3音読単語テスト': 'PROG.1〜3を音読 → 単語テストで自己チェック',
+  '理科:生物の世界まとめ':    '1章の用語を全て確認 → まとめプリント',
+  '社会:地理前半まとめ':      '地理前半の問題を解く → ❌問題に印',
+  '数学:❌問題繰り返し':      '❌印の問題を解き直し → 解けるまで繰り返す',
+  '英語:音読単語テスト':      'PROG.1〜3の単語テスト → 覚えていない単語を再確認',
+  '理科:用語暗記':            '1章の用語を暗記カードで確認 → 言えるまで繰り返す',
+  '社会:問題集3ページ':       '問題集3ページ分を解く → 答え合わせ → 見直し',
+  '国語:漢字まとめノート見直し': 'まとめノートを見直し → 書けない漢字を練習',
+};
+
+// ===== SCHEDULE =====
+// light: weekend / GW light review (15〜20分) — tasks array
+const schedule = [
+  // Phase 1
+  { date:'2025-04-09', phase:1, subjects:[
+    {key:'math', topic:'正の数負の数①②'},
+    {key:'sci',  topic:'身近な生物の観察'}
+  ]},
+  { date:'2025-04-10', phase:1, subjects:[
+    {key:'eng',  topic:'アルファベット発音'},
+    {key:'soc',  topic:'世界の姿地図'}
+  ]},
+  { date:'2025-04-11', phase:1, subjects:[
+    {key:'math', topic:'正の数負の数①②'},
+    {key:'eng',  topic:'アルファベット発音'}
+  ]},
+  { date:'2025-04-12', phase:1, subjects:[
+    {key:'sci',  topic:'身近な生物の観察'},
+    {key:'soc',  topic:'世界の姿地図'}
+  ]},
+  { date:'2025-04-13', phase:1, subjects:[
+    {key:'math', topic:'絶対値'},
+    {key:'jpn',  topic:'言葉の単位漢字'}
+  ]},
+  { date:'2025-04-14', phase:1, subjects:[
+    {key:'eng',  topic:'PROGRAM1 be動詞'},
+    {key:'sci',  topic:'種子をつくる植物'}
+  ]},
+  { date:'2025-04-15', phase:1, subjects:[
+    {key:'math', topic:'たし算ひき算'},
+    {key:'soc',  topic:'世界の6つの州'}
+  ]},
+  { date:'2025-04-16', phase:1, subjects:[
+    {key:'eng',  topic:'PROGRAM1 疑問文否定文'},
+    {key:'jpn',  topic:'漢字音訓'}
+  ]},
+  { date:'2025-04-17', phase:1, subjects:[
+    {key:'math', topic:'かけ算わり算指数'},
+    {key:'sci',  topic:'種子をつくらない植物'}
+  ]},
+  { date:'2025-04-18', phase:1, subjects:[
+    {key:'math', topic:'かけ算わり算指数'},
+    {key:'jpn',  topic:'言葉の単位漢字'}
+  ]},
+  { date:'2025-04-19', phase:1, subjects:[
+    {key:'sci',  topic:'種子をつくる植物'},
+    {key:'soc',  topic:'世界の6つの州'}
+  ]},
+  { date:'2025-04-20', phase:1, subjects:[
+    {key:'math', topic:'1章まとめ'},
+    {key:'eng',  topic:'PROGRAM2 一般動詞'}
+  ]},
+  { date:'2025-04-21', phase:1, subjects:[
+    {key:'soc',  topic:'緯度経度時差'},
+    {key:'jpn',  topic:'シンシュン読解'}
+  ]},
+  { date:'2025-04-22', phase:1, subjects:[
+    {key:'math', topic:'文字式ルール'},
+    {key:'sci',  topic:'脊椎動物'}
+  ]},
+  { date:'2025-04-23', phase:1, subjects:[
+    {key:'eng',  topic:'PROGRAM2 疑問文'},
+    {key:'soc',  topic:'日本の位置領土'}
+  ]},
+  { date:'2025-04-24', phase:1, subjects:[
+    {key:'math', topic:'式の値文字式計算'},
+    {key:'jpn',  topic:'野原はうたう詩'}
+  ]},
+  { date:'2025-04-25', phase:1, subjects:[
+    {key:'eng',  topic:'PROGRAM2 疑問文'},
+    {key:'jpn',  topic:'漢字音訓'}
+  ]},
+  { date:'2025-04-26', phase:1, subjects:[
+    {key:'math', topic:'文字式ルール'},
+    {key:'sci',  topic:'脊椎動物'}
+  ]},
+  { date:'2025-04-27', phase:1, subjects:[
+    {key:'eng',  topic:'PROGRAM3 can'},
+    {key:'sci',  topic:'無脊椎動物'}
+  ]},
+  { date:'2025-04-28', phase:1, subjects:[
+    {key:'math', topic:'文字式の利用2章まとめ'},
+    {key:'soc',  topic:'地理まとめ'}
+  ]},
+  { date:'2025-04-29', phase:1, subjects:[
+    {key:'soc',  topic:'日本の位置領土'},
+    {key:'jpn',  topic:'野原はうたう詩'}
+  ]},
+  { date:'2025-04-30', phase:1, subjects:[
+    {key:'math', topic:'式の値文字式計算'},
+    {key:'eng',  topic:'PROGRAM3 can'}
+  ]},
+  // GW: 軽め復習で毎日続ける
+  { date:'2025-05-01', phase:2, subjects:[
+    {key:'math', topic:'1章全部解き直し'},
+    {key:'sci',  topic:'生物の世界まとめ'}
+  ]},
+  { date:'2025-05-02', phase:2, subjects:[
+    {key:'eng',  topic:'PROGRAM1〜3音読単語テスト'},
+    {key:'soc',  topic:'地理前半まとめ'}
+  ]},
+  { date:'2025-05-03', phase:2, subjects:[
+    {key:'math', topic:'❌問題繰り返し'},
+    {key:'jpn',  topic:'漢字まとめノート見直し'}
+  ]},
+  { date:'2025-05-04', phase:2, subjects:[
+    {key:'sci',  topic:'用語暗記'},
+    {key:'soc',  topic:'問題集3ページ'}
+  ]},
+  { date:'2025-05-05', phase:2, subjects:[
+    {key:'eng',  topic:'音読単語テスト'},
+    {key:'math', topic:'文字式の利用2章まとめ'}
+  ]},
+  { date:'2025-05-06', phase:2, subjects:[
+    {key:'jpn',  topic:'漢字まとめノート見直し'},
+    {key:'soc',  topic:'地理まとめ'}
+  ]},
+  // Phase 2
+  { date:'2025-05-07', phase:2, subjects:[
+    {key:'math', topic:'1章全部解き直し'},
+    {key:'eng',  topic:'PROGRAM1〜3音読単語テスト'}
+  ]},
+  { date:'2025-05-08', phase:2, subjects:[
+    {key:'sci',  topic:'生物の世界まとめ'},
+    {key:'soc',  topic:'地理前半まとめ'}
+  ]},
+  { date:'2025-05-09', phase:2, subjects:[
+    {key:'math', topic:'❌問題繰り返し'},
+    {key:'eng',  topic:'音読単語テスト'}
+  ]},
+  { date:'2025-05-10', phase:2, subjects:[
+    {key:'sci',  topic:'用語暗記'},
+    {key:'soc',  topic:'問題集3ページ'}
+  ]},
+  { date:'2025-05-11', phase:2, subjects:[
+    {key:'math', topic:'❌問題繰り返し'}
+  ]},
+  { date:'2025-05-12', phase:2, subjects:[
+    {key:'eng',  topic:'音読単語テスト'}
+  ]},
+  { date:'2025-05-13', phase:2, subjects:[
+    {key:'sci',  topic:'用語暗記'}
+  ]},
+  { date:'2025-05-14', phase:2, subjects:[
+    {key:'soc',  topic:'問題集3ページ'}
+  ]},
+  { date:'2025-05-15', phase:2, subjects:[
+    {key:'jpn',  topic:'漢字まとめノート見直し'}
+  ]},
+  { date:'2025-05-16', phase:2, subjects:[
+    {key:'math', topic:'❌問題繰り返し'},
+    {key:'jpn',  topic:'漢字まとめノート見直し'}
+  ]},
+  { date:'2025-05-17', phase:2, subjects:[
+    {key:'sci',  topic:'用語暗記'},
+    {key:'soc',  topic:'問題集3ページ'}
+  ]},
+  { date:'2025-05-18', phase:2, wait:true },
+  { date:'2025-05-19', phase:2, wait:true },
+  { date:'2025-05-20', phase:2, wait:true },
+  { date:'2025-05-21', phase:2, wait:true },
+  // Phase 3
+  { date:'2025-05-22', phase:3, review:'全教科 ❌問題3周', detail:'間違えた問題をすべて3回解き直す' },
+  { date:'2025-05-23', phase:3, review:'全教科 ❌問題3周', detail:'間違えた問題をすべて3回解き直す' },
+  { date:'2025-05-24', phase:3, weekend:true, dur:'🔥 2〜3時間', blocks:[
+    { cls:'math', label:'数学', task:'❌問題を全部解き直す。解けなかった問題は例題から確認してノートにまとめる。' },
+    { cls:'eng',  label:'英語', task:'PROG.1〜3の本文を音読 → 単語テストを自分でやって全問クリアを目指す。' },
+    { cls:'sci',  label:'理科', task:'生物1章の用語を全部確認。図を見ずに書けるかチェックする。' },
+  ]},
+  { date:'2025-05-25', phase:3, weekend:true, dur:'🔥 2〜3時間', blocks:[
+    { cls:'soc',  label:'社会', task:'地理全体の問題集を解く。❌をつけて解き直しまで完了させる。' },
+    { cls:'jpn',  label:'国語', task:'漢字まとめノートを全ページ見直し → 書けない漢字は5回ずつ練習。' },
+    { cls:'math', label:'数学', task:'文字式の計算問題を10問解いてスピードを上げる練習。' },
+  ]},
+  { date:'2025-05-26', phase:3, review:'苦手単元最終確認', detail:'各教科の苦手単元を集中的に復習' },
+  { date:'2025-05-27', phase:3, review:'苦手単元最終確認', detail:'各教科の苦手単元を集中的に復習' },
+  { date:'2025-05-28', phase:3, review:'苦手単元最終確認', detail:'各教科の苦手単元を集中的に復習' },
+  { date:'2025-05-29', phase:3, review:'苦手単元最終確認', detail:'各教科の苦手単元を集中的に復習' },
+  { date:'2025-05-30', phase:3, review:'教科書最初から全見直し', detail:'全教科の教科書を最初から読み直し，確認テスト' },
+  { date:'2025-05-31', phase:3, weekend:true, dur:'🔥 2〜3時間', blocks:[
+    { cls:'math', label:'数学', task:'1・2章を最初から通して解く。時間を計りながら本番のつもりで。' },
+    { cls:'eng',  label:'英語', task:'PROG.1〜3を全部音読 → 単語・文法の最終確認。わからないところを潰す。' },
+    { cls:'sci',  label:'理科', task:'生物全体の用語・図を総復習。声に出して説明できるか確認する。' },
+  ]},
+  { date:'2025-06-01', phase:3, weekend:true, dur:'🎯 仕上げ 1〜2時間', blocks:[
+    { cls:'soc',  label:'社会', task:'地理の問題集で間違えた問題を最終確認。地図帳も見直す。' },
+    { cls:'jpn',  label:'国語', task:'漢字の最終確認。読み・書き両方スラスラできるかチェック。' },
+    { cls:'math', label:'数学', task:'苦手な計算を5問だけ → 教科書の最初のページをサッと読んで終わり。早く寝る！😴' },
+  ]},
+  { date:'2025-06-02', phase:3, review:'教科書最初から全見直し', detail:'最終確認！当日の持ち物・時間割を確認する' },
+];
+
+// ===== すたぺんドリル 単元別リンク =====
+const SUTAPEN = {
+  // 数学
+  '数学:正の数負の数①②':    'https://startoo.co/workbook/109341/',
+  '数学:絶対値':              'https://startoo.co/workbook/109341/',
+  '数学:たし算ひき算':        'https://startoo.co/workbook/109368/',
+  '数学:かけ算わり算指数':    'https://startoo.co/workbook/109390/',
+  '数学:1章まとめ':           'https://startoo.co/workbook/109341/',
+  '数学:文字式ルール':        'https://startoo.co/workbook/112354/',
+  '数学:式の値文字式計算':    'https://startoo.co/workbook/112371/',
+  '数学:文字式の利用2章まとめ': 'https://startoo.co/workbook/112388/',
+  '数学:1章全部解き直し':     'https://startoo.co/workbook/109341/',
+  '数学:❌問題繰り返し':      'https://startoo.co/workbook/109341/',
+  // 理科（単元別直接リンク）
+  '理科:身近な生物の観察':   'https://startoo.co/workbook/140401/',
+  '理科:種子をつくる植物':   'https://startoo.co/workbook/140407/',
+  '理科:種子をつくらない植物': 'https://startoo.co/workbook/140407/',
+  '理科:脊椎動物':            'https://startoo.co/workbook/140414/',
+  '理科:無脊椎動物':          'https://startoo.co/workbook/140414/',
+  '理科:生物の世界まとめ':    'https://startoo.co/workbook/143548/',
+  '理科:用語暗記':            'https://startoo.co/workbook/143548/',
+  // 社会（単元別直接リンク）
+  '社会:世界の姿地図':       'https://startoo.co/workbook/140180/',
+  '社会:世界の6つの州':      'https://startoo.co/workbook/140180/',
+  '社会:緯度経度時差':        'https://startoo.co/workbook/140183/',
+  '社会:日本の位置領土':      'https://startoo.co/workbook/140186/',
+  '社会:地理まとめ':          'https://startoo.co/workbook/140177/',
+  '社会:地理前半まとめ':      'https://startoo.co/workbook/140177/',
+  '社会:問題集3ページ':       'https://startoo.co/workbook/140177/',
+  // 英語
+  '英語:アルファベット発音':  'https://startoo.co/workbook/115964/',
+  '英語:PROGRAM1 be動詞':    'https://startoo.co/workbook/115967/',
+  '英語:PROGRAM1 疑問文否定文': 'https://startoo.co/workbook/115970/',
+  '英語:PROGRAM2 一般動詞':   'https://startoo.co/workbook/115973/',
+  '英語:PROGRAM2 疑問文':     'https://startoo.co/workbook/115976/',
+  '英語:PROGRAM3 can':        'https://startoo.co/workbook/115979/',
+  '英語:PROGRAM1〜3音読単語テスト': 'https://startoo.co/workbook/115964/',
+  '英語:音読単語テスト':      'https://startoo.co/workbook/115964/',
+  // 国語（単元別直接リンク - ダイスト）
+  '国語:言葉の単位漢字':     'https://mondaistock.com/bushu-toi/',
+  '国語:漢字音訓':            'https://mondaistock.com/onkun-2/',
+  '国語:シンシュン読解':      'https://mondaistock.com/shinshun/',
+  '国語:野原はうたう詩':      'https://mondaistock.com/nohara/',
+  '国語:漢字まとめノート見直し': 'https://mondaistock.com/naritachi/',
+};
+
+function parseDate(s) {
+  const [y,m,d] = s.split('-').map(Number);
+  return new Date(y,m-1,d);
+}
+function formatDate(s) {
+  const dt = parseDate(s);
+  const m = dt.getMonth()+1, d = dt.getDate(), w = WEEKDAY[dt.getDay()];
+  return { m, d, w };
+}
+
+function buildCard(item) {
+  const { m, d, w } = formatDate(item.date);
+  const dateStr = `${m}/${d}（${w}）`;
+
+  if (item.weekend) {
+    const blocks = (item.blocks || []).map(b => `
+      <div class="weekend-block ${b.cls}">
+        <div class="weekend-block-title ${b.cls}">${b.label}</div>
+        <div class="weekend-task">✏️ ${b.task}</div>
+      </div>`).join('');
+    return `
+    <div class="day-card weekend-intensive">
+      <div class="weekend-header">
+        <div class="card-date">${dateStr}</div>
+        <span class="weekend-badge">💪 テスト直前 集中日 ${item.dur}</span>
+      </div>
+      <div class="weekend-body">
+        ${blocks}
+        <div class="habitica-hint">✅ 終わったらHabiticaをチェック！</div>
+      </div>
+    </div>`;
+  }
+
+  if (item.light) {
+    const tasks = (item.tasks || []).map(t =>
+      `<div class="light-task">✏️ ${t}</div>`
+    ).join('');
+    return `
+    <div class="day-card light">
+      <div class="light-header">
+        <div class="card-date">${dateStr}</div>
+        <span class="light-badge">🌤 軽め復習 15〜20分</span>
+      </div>
+      <div class="light-body">
+        ${tasks}
+        <div class="light-note">✅ 終わったらHabiticaをチェック！</div>
+      </div>
+    </div>`;
+  }
+
+  if (item.wait) {
+    return `
+    <div class="day-card wait">
+      <div class="card-header">
+        <div class="card-date">${dateStr}</div>
+      </div>
+      <div class="wait-text">⏳ テスト範囲確定待ち — 先生の指示を確認しよう！</div>
+    </div>`;
+  }
+
+  if (item.review) {
+    const dur = DURATION[item.phase];
+    return `
+    <div class="day-card review">
+      <div class="card-header">
+        <div class="card-date">${dateStr}</div>
+        <span class="duration-badge">${dur}</span>
+      </div>
+      <div class="card-body">
+        <div style="font-weight:800;color:#c62828;font-size:15px;margin-bottom:6px;">🔁 ${item.review}</div>
+        <div style="font-size:13px;color:#555;">${item.detail}</div>
+        <div class="habitica-hint">✅ Habiticaの「今日のタスク」をチェック！</div>
+      </div>
+    </div>`;
+  }
+
+  // Normal study day
+  const subjects = item.subjects;
+  const mainCls = subjects[0].key;
+  const dur = DURATION[item.phase];
+
+  const badges = subjects.map(s =>
+    `<span class="badge ${s.key}">${SUBJ[s.key].label}</span>`
+  ).join('');
+
+  const blocks = subjects.map(s => {
+    const info = SUBJ[s.key];
+    const isTryIT = info.type === 'tryit';
+    const searchKey = encodeURIComponent(s.topic);
+    const videoUrl  = isTryIT
+      ? 'https://www.try-it.jp/c1/english/'
+      : YOUTUBE_HAICHI + searchKey;
+
+    const btnClass = isTryIT ? 'btn-tryit' : 'btn-haichi';
+    const btnLabel = isTryIT ? '▶ Try IT' : '▶ 葉一先生';
+
+    // テスト対策リンク（教科別）
+    const testUrls = {
+      math: 'https://iidrill.com/category/%E6%95%B0%E5%AD%A6/',
+      eng:  'https://iidrill.com/category/%E8%8B%B1%E8%AA%9E/',
+      sci:  'https://happylilac.net/jhs-science1.html',
+      soc:  'https://mondaistock.com/',
+      jpn:  'https://mondaistock.com/one-mitumura/',
+    };
+    const testUrl = testUrls[s.key];
+
+    const topicKey = `${info.label}:${s.topic}`;
+    const page = PAGE_INFO[topicKey] || '教科書参照';
+    const todo = TODO_INFO[topicKey] || info.todo;
+    const sutapenUrl = SUTAPEN[topicKey] || null;
+
+    return `
+    <div class="subject-block ${s.key}">
+      <div class="subject-title ${s.key}">${info.label}：${s.topic}</div>
+      <div class="btn-row">
+        <a href="${videoUrl}" target="_blank" class="btn ${btnClass}">${btnLabel}</a>
+        ${testUrl ? `<a href="${testUrl}" target="_blank" class="btn btn-test">📋 テスト対策</a>` : ''}
+      </div>
+      <div class="btn-row" style="margin-top:4px;">
+        ${sutapenUrl ? `<a href="${sutapenUrl}" target="_blank" class="btn btn-sutapen">📝 すたぺんドリル</a>` : ''}
+        <button class="btn-claude" onclick="showPrompt('${info.label}','${s.topic}')">🤖 Claudeテスト</button>
+      </div>
+      <div class="info-row"><span class="info-label">📖 ページ</span>${page}</div>
+      <div class="info-row"><span class="info-label">✏️ やること</span>${todo}</div>
+    </div>`;
+  }).join('');
+
+  return `
+  <div class="day-card ${mainCls}">
+    <div class="card-header">
+      <div class="card-date">${dateStr}<span>${w}曜日</span></div>
+      <div class="badges">${badges}</div>
+    </div>
+    <div class="card-body">
+      <span class="duration-badge">${dur}×${subjects.length}教科</span>
+      ${blocks}
+      <div class="habitica-hint">✅ 終わったらHabiticaの「今日のタスク」をチェック！</div>
+    </div>
+  </div>`;
+}
+
+function renderCards() {
+  const p1 = schedule.filter(d => d.phase === 1);
+  const p2 = schedule.filter(d => d.phase === 2);
+  const p3 = schedule.filter(d => d.phase === 3);
+
+  ['phase1-cards','phase1-cards-b'].forEach(id => {
+    document.getElementById(id).innerHTML = p1.map(buildCard).join('');
+  });
+  ['phase2-cards','phase2-cards-b'].forEach(id => {
+    document.getElementById(id).innerHTML = p2.map(buildCard).join('');
+  });
+  ['phase3-cards','phase3-cards-b'].forEach(id => {
+    document.getElementById(id).innerHTML = p3.map(buildCard).join('');
+  });
+}
+
+function switchTab(id, el) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  el.classList.add('active');
+}
+
+function updateCountdown() {
+  const now = new Date();
+  const test = new Date(2025,5,3); // June 3
+  const diff = Math.ceil((test - now) / (1000*60*60*24));
+  const el = document.getElementById('countdown');
+  if (diff > 0) el.textContent = diff;
+  else if (diff === 0) el.textContent = '本番！';
+  else el.textContent = '終了';
+}
+
+renderCards();
+updateCountdown();
+setInterval(updateCountdown, 60000);
+
+// ===== SCORE BOARD =====
+const SCORE_KEY = 'claudeScores';
+
+function getScores() {
+  try { return JSON.parse(localStorage.getItem(SCORE_KEY) || '{}'); } catch(e) { return {}; }
+}
+function saveScore() {
+  const val = parseInt(document.getElementById('scoreInput').value);
+  if (isNaN(val) || val < 0 || val > 5) { alert('0〜5の数字を入力してね！'); return; }
+  const today = new Date().toISOString().slice(0,10);
+  const scores = getScores();
+  scores[today] = val;
+  localStorage.setItem(SCORE_KEY, JSON.stringify(scores));
+  document.getElementById('scoreInput').value = '';
+  renderScores();
+}
+function renderScores() {
+  const scores = getScores();
+  const keys = Object.keys(scores).sort().slice(-7);
+  const WD2 = ['日','月','火','水','木','金','土'];
+  const best = keys.length ? Math.max(...keys.map(k=>scores[k])) : null;
+
+  document.getElementById('scoreHistory').innerHTML = keys.map(k => {
+    const dt = new Date(k+'T00:00:00');
+    const w = WD2[dt.getDay()];
+    const m = dt.getMonth()+1, d = dt.getDate();
+    const v = scores[k];
+    const isBest = v === best && best !== null;
+    return `<div class="score-day${isBest?' best':''}">
+      <div class="sd">${m}/${d}(${w})</div>
+      <div class="sv">${v}<span style="font-size:9px;">/5</span></div>
+    </div>`;
+  }).join('');
+
+  const bestEl = document.getElementById('scoreBest');
+  if (best !== null) {
+    bestEl.innerHTML = `🏆 ベストスコア：<strong>${best}</strong>/5問`;
+  } else {
+    bestEl.textContent = 'ベストスコア：まだなし';
+  }
+}
+renderScores();
+
+// ===== MISS MEMO =====
+const MISS_KEY = 'missMemo';
+function getMisses() {
+  try { return JSON.parse(localStorage.getItem(MISS_KEY) || '[]'); } catch(e) { return []; }
+}
+function saveMisses() {
+  const rows = document.querySelectorAll('.miss-entry');
+  const data = [];
+  rows.forEach(r => {
+    const subj = r.querySelector('.miss-subj-select').value;
+    const text = r.querySelector('.miss-text').value.trim();
+    if (text) data.push({ subj, text });
+  });
+  localStorage.setItem(MISS_KEY, JSON.stringify(data));
+}
+function addMissRow(subj='数学', text='') {
+  const div = document.createElement('div');
+  div.className = 'miss-row miss-entry';
+  div.innerHTML = `
+    <select class="miss-subj-select" onchange="saveMisses()">
+      ${['数学','英語','理科','社会','国語'].map(s=>`<option${s===subj?' selected':''}>${s}</option>`).join('')}
+    </select>
+    <textarea class="miss-text" placeholder="どんな問題を間違えた？理由も一言" oninput="saveMisses()">${text}</textarea>
+    <button class="miss-del" onclick="this.parentNode.remove();saveMisses()">✕</button>
+  `;
+  document.getElementById('missRows').appendChild(div);
+}
+function loadMisses() {
+  const data = getMisses();
+  if (data.length === 0) { addMissRow(); return; }
+  data.forEach(d => addMissRow(d.subj, d.text));
+}
+function toggleMiss() {
+  const body = document.getElementById('missBody');
+  const btn = document.querySelector('.miss-toggle');
+  if (body.style.display === 'none') {
+    body.style.display = 'block';
+    btn.textContent = '▲ 閉じる';
+    loadMisses();
+  } else {
+    body.style.display = 'none';
+    btn.textContent = '▼ 開く';
+  }
+}
+function generateMissPrompt() {
+  saveMisses();
+  const data = getMisses();
+  if (data.length === 0) { alert('間違いを入力してね！'); return; }
+  const list = data.map((d,i) => `・${d.subj}：${d.text}`).join('\n');
+  const prompt = `中学1年生です。今週間違えた問題を教えてください。分析して、来週やるべき対策を3つ教えてください。\n\n【今週の間違い】\n${list}`;
+  showPromptText(prompt);
+}
+
+// ===== CLAUDE QUIZ PROMPT =====
+function showPrompt(subj, topic) {
+  const prompt = `中学1年生です。今日「${subj}：${topic}」を勉強しました。\n\n以下をやってください：\n1. この単元から5問クイズを出す（1問ずつ出して、答えを待ってから次の問題へ）\n2. 全問終わったら点数（○/5）と、間違えた問題の解説をしてください\n3. 最後に「今日の弱点」を一言でまとめてください`;
+  showPromptText(prompt);
+}
+function showPromptText(prompt) {
+  document.getElementById('promptText').textContent = prompt;
+  document.getElementById('promptOverlay').classList.add('open');
+  document.getElementById('copiedMsg').style.display = 'none';
+}
+function closePrompt() {
+  document.getElementById('promptOverlay').classList.remove('open');
+}
+function copyPrompt() {
+  const text = document.getElementById('promptText').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copiedMsg').style.display = 'block';
+  }).catch(() => {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    document.getElementById('copiedMsg').style.display = 'block';
+  });
+}
+</script>
+</body>
+</html>
+ 
