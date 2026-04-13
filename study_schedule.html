@@ -1279,9 +1279,9 @@ function buildCard(item) {
       <div class="subject-title ${s.key}">${info.label}：${s.topic}</div>
       <div class="btn-row">
         <a href="${videoUrl}" target="_blank" class="btn ${btnClass}">${btnLabel}</a>
-        ${testUrl ? `<a href="${testUrl}" target="_blank" class="btn btn-test">📋 テスト対策</a>` : ''}
       </div>
       <div class="btn-row" style="margin-top:4px;">
+        ${sutapenUrl ? `<a href="${sutapenUrl}" target="_blank" class="btn btn-sutapen">${s.key === 'jpn' ? '📝 すたぺんドリル' : '📝 ちびむすドリル'}</a>` : ''}
         <button class="btn-claude" onclick="showPrompt('${info.label}','${s.topic}')">🤖 Claudeテスト</button>
       </div>
       <div class="info-row"><span class="info-label">📖 ページ</span>${page}</div>
